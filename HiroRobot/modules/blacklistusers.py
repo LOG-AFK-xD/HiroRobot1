@@ -9,7 +9,7 @@ from HiroRobot import (
     TIGERS,
     WOLVES,
     dispatcher,
-) 
+)
 from HiroRobot.modules.helper_funcs.chat_status import dev_plus
 from HiroRobot.modules.helper_funcs.extraction import (
     extract_user,

@@ -23,9 +23,11 @@ from ptbcontrib.postgres_persistence import PostgresPersistence
 
 StartTime = time.time()
 
+
 def get_user_list(__init__, key):
     with open("{}/HiroRobot/{}".format(os.getcwd(), __init__), "r") as json_file:
         return json.load(json_file)[key]
+
 
 # enable logging
 FORMAT = "[HiroRobot] %(message)s"
@@ -36,9 +38,11 @@ logging.basicConfig(
     datefmt="[%X]",
 )
 logging.getLogger("pyrogram").setLevel(logging.INFO)
-logging.getLogger('ptbcontrib.postgres_persistence.postgrespersistence').setLevel(logging.WARNING)
+logging.getLogger("ptbcontrib.postgres_persistence.postgrespersistence").setLevel(
+    logging.WARNING
+)
 
-LOGGER = logging.getLogger('[HiroRobot]')
+LOGGER = logging.getLogger("[HiroRobot]")
 LOGGER.info("Hiro is starting. | An Shiinobu Project Parts. | Licensed under GPLv3.")
 LOGGER.info("Not affiliated to other anime or Villain in any way whatsoever.")
 LOGGER.info("Project maintained by: github.com/shiinobu (t.me/saint_foire)")
@@ -76,7 +80,7 @@ if ENV:
 
     try:
         WOLVES = {int(x) for x in os.environ.get("WOLVES", "").split()}
-    except ValueError: 
+    except ValueError:
         raise Exception("Your whitelisted users list does not contain valid integers.")
 
     try:
@@ -111,7 +115,7 @@ if ENV:
     DEL_CMDS = bool(os.environ.get("DEL_CMDS", False))
     STRICT_GBAN = bool(os.environ.get("STRICT_GBAN", False))
     WORKERS = int(os.environ.get("WORKERS", 8))
-    REDIS_URL = os.environ.get('REDIS_URL')
+    REDIS_URL = os.environ.get("REDIS_URL")
     BAN_STICKER = os.environ.get("BAN_STICKER", "CAADAgADOwADPPEcAXkko5EB3YGYAg")
     ALLOW_EXCL = os.environ.get("ALLOW_EXCL", False)
     CASH_API_KEY = os.environ.get("CASH_API_KEY", None)
@@ -214,7 +218,7 @@ else:
         raise Exception("Your blacklisted chats list does not contain valid integers.")
 
 
-REDIS = StrictRedis.from_url(REDIS_URL,decode_responses=True)
+REDIS = StrictRedis.from_url(REDIS_URL, decode_responses=True)
 
 try:
 
@@ -228,9 +232,9 @@ except BaseException:
 
 finally:
 
-   REDIS.ping()
+    REDIS.ping()
 
-   LOGGER.info("Your redis server is now alive!")
+    LOGGER.info("Your redis server is now alive!")
 
 
 # If you forking dont remove this id, just add your id. LOL...
@@ -283,6 +287,7 @@ pbot = Client(
 apps = []
 apps.append(pbot)
 loop = asyncio.get_event_loop()
+
 
 async def get_entity(client, entity):
     entity_client = client

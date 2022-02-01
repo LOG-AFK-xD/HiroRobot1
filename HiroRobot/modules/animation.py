@@ -199,6 +199,7 @@ def blockanimation(update: Update, context: CallbackContext):
         time.sleep(EDIT_SLEEP)
     msg.edit_text("🟥")
 
+
 @user_admin
 def clockanimation(update: Update, context: CallbackContext):
     bot, args = context.bot, context.args
@@ -210,6 +211,7 @@ def clockanimation(update: Update, context: CallbackContext):
         msg.edit_text(clock_ani[x % 11])
         time.sleep(EDIT_SLEEP)
     msg.edit_text("🕚")
+
 
 @user_admin
 def earthanimation(update: Update, context: CallbackContext):
@@ -267,7 +269,6 @@ def kill(update: Update, context: CallbackContext):
         msg.edit_text(kill_you[x % 12])
         time.sleep(EDIT_SLEEP)
     msg.edit_text("⚰")
-
 
 
 KILL_HANDLER = DisableAbleCommandHandler("kill", kill, run_async=True)

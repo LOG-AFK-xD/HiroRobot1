@@ -3,6 +3,7 @@ import threading
 from HiroRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, BigInteger, UnicodeText
 
+
 class AFK(BASE):
     __tablename__ = "afk_users"
 
