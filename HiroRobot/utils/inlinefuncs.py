@@ -15,23 +15,28 @@ from pykeyboard import InlineKeyboard
 from pyrogram import __version__ as pyrover
 from pyrogram import filters
 from pyrogram.raw.functions import Ping
-from pyrogram.types import (CallbackQuery, 
-                            InlineKeyboardButton,
-                            InlineQueryResultArticle,
-                            InlineQueryResultPhoto,
-                            InputTextMessageContent)
+from pyrogram.types import (
+    CallbackQuery,
+    InlineKeyboardButton,
+    InlineQueryResultArticle,
+    InlineQueryResultPhoto,
+    InputTextMessageContent,
+)
 from search_engine_parser import GoogleSearch
 
 from HiroRobot import (
     DEV_USERS,
-    EVENT_LOGS, 
+    EVENT_LOGS,
     BOT_USERNAME,
     ubot2,
 )
-from HiroRobot import pbot as app 
+from HiroRobot import pbot as app
 from HiroRobot import arq
 from HiroRobot.services.keyboard import Ikb
-from HiroRobot.utils.pluginhelper import convert_seconds_to_minutes as time_convert, fetch
+from HiroRobot.utils.pluginhelper import (
+    convert_seconds_to_minutes as time_convert,
+    fetch,
+)
 from HiroRobot.services.tasks import _get_tasks_text, all_tasks, rm_task
 from HiroRobot.services.types import InlineQueryResultCachedDocument
 from HiroRobot.modules.info import get_chat_info, get_user_info
@@ -86,6 +91,7 @@ async def paste(content):
     link = await _netcat("ezup.dev", 9999, content)
     return link
 
+
 async def inline_help_func(__HELP__):
     buttons = InlineKeyboard(row_width=4)
     buttons.add(
@@ -115,9 +121,7 @@ async def alive_function(answers):
     ubot_state = "Dead" if not await ubot2.get_me() else "Alive"
     buttons.add(
         InlineKeyboardButton("Main bot", url="https://t.me/NezukoXRobot"),
-        InlineKeyboardButton(
-            "Go Inline!", switch_inline_query_current_chat=""
-        ),
+        InlineKeyboardButton("Go Inline!", switch_inline_query_current_chat=""),
     )
 
     msg = f"""
@@ -171,9 +175,7 @@ __**Translated from {result.src} to {result.dest}**__
             ),
             InlineQueryResultArticle(
                 title=result.translatedText,
-                input_message_content=InputTextMessageContent(
-                    result.translatedText
-                ),
+                input_message_content=InputTextMessageContent(result.translatedText),
             ),
         ]
     )
@@ -323,9 +325,7 @@ async def youtube_func(answers, text):
 **Duration:** {i.duration}
 **Uploaded:** {i.publish_time}
 **Description:** {i.long_desc}"""
-        description = (
-            f"{i.views} | {i.channel} | {i.duration} | {i.publish_time}"
-        )
+        description = f"{i.views} | {i.channel} | {i.duration} | {i.publish_time}"
         answers.append(
             InlineQueryResultArticle(
                 title=i.title,
@@ -407,9 +407,7 @@ async def tg_search_func(answers, text, user_id):
             ),
         )
         name = (
-            message.from_user.first_name
-            if message.from_user.first_name
-            else "NO NAME"
+            message.from_user.first_name if message.from_user.first_name else "NO NAME"
         )
         caption = f"""
 **Query:** {text}
@@ -544,9 +542,7 @@ async def speedtest_init(query):
         return answers
     msg = "**Click The Button Below To Perform A Speedtest**"
     button = InlineKeyboard(row_width=1)
-    button.add(
-        InlineKeyboardButton(text="Test", callback_data="test_speedtest")
-    )
+    button.add(InlineKeyboardButton(text="Test", callback_data="test_speedtest"))
     answers.append(
         InlineQueryResultArticle(
             title="Click Here",
@@ -659,9 +655,7 @@ async def tmdb_func(answers, query):
         )
         answers.append(
             InlineQueryResultPhoto(
-                photo_url=result.backdrop
-                if result.backdrop
-                else result.poster,
+                photo_url=result.backdrop if result.backdrop else result.poster,
                 caption=caption,
                 title=result.title,
                 description=f"{genre} • {result.releaseDate} • {result.rating} • {description}",
@@ -774,9 +768,7 @@ async def execute_code(query):
             answers.append(
                 InlineQueryResultArticle(
                     title="Error",
-                    input_message_content=InputTextMessageContent(
-                        response.result
-                    ),
+                    input_message_content=InputTextMessageContent(response.result),
                 )
             )
         else:

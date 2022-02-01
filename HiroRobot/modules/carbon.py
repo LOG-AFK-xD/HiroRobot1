@@ -26,6 +26,7 @@ async def carbon_func(_, message):
 
 MEMEK = "https://telegra.ph/file/dd581f386b881ee83f58b.jpg"
 
+
 @pbot.on_message(filters.command("repo"))
 async def repo(_, message):
     await message.reply_photo(
@@ -43,11 +44,9 @@ async def repo(_, message):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(
-                        "Repo", url="https://github.com/Harshit-kun"), 
-                    InlineKeyboardButton(
-                        "Support", url="https://t.me/NezukoXSupport")
+                    InlineKeyboardButton("Repo", url="https://github.com/Harshit-kun"),
+                    InlineKeyboardButton("Support", url="https://t.me/NezukoXSupport"),
                 ]
             ]
-        )
+        ),
     )

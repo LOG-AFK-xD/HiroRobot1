@@ -37,18 +37,20 @@ def content(msg: Message) -> [None, str]:
 @capture_err
 async def bug(_, msg: Message):
     if msg.chat.username:
-        chat_username = (f"@{msg.chat.username} / `{msg.chat.id}`")
+        chat_username = f"@{msg.chat.username} / `{msg.chat.id}`"
     else:
-        chat_username = (f"Private Group / `{msg.chat.id}`")
+        chat_username = f"Private Group / `{msg.chat.id}`"
 
     bugs = content(msg)
     user_id = msg.from_user.id
-    mention = "["+msg.from_user.first_name+"](tg://user?id="+str(msg.from_user.id)+")"
+    mention = (
+        "[" + msg.from_user.first_name + "](tg://user?id=" + str(msg.from_user.id) + ")"
+    )
     datetimes_fmt = "%d-%m-%Y"
     datetimes = datetime.utcnow().strftime(datetimes_fmt)
 
     thumb = "https://telegra.ph/file/bd218d4af1c69c586ebb0.jpg"
-    
+
     bug_report = f"""
 **#BUG : ** **@{owner_usn}**
 
@@ -60,7 +62,6 @@ async def bug(_, msg: Message):
 
 **Event Stamp : ** **{datetimes}**"""
 
-    
     if msg.chat.type == "private":
         await msg.reply_text("❎ <b>This command only works in groups.</b>")
         return
@@ -72,22 +73,15 @@ async def bug(_, msg: Message):
             )
             return
         else:
-            await msg.reply_text(
-                "Owner noob!"
-            )
+            await msg.reply_text("Owner noob!")
     elif user_id != owner_id:
         if bugs:
             await msg.reply_text(
                 f"<b>Bug Report : {bugs}</b>\n\n"
                 "✅ <b>The bug was successfully reported to the support group!</b>",
                 reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "Close", callback_data=f"close_reply")
-                        ]
-                    ]
-                )
+                    [[InlineKeyboardButton("Close", callback_data=f"close_reply")]]
+                ),
             )
             await Client.send_photo(
                 log,
@@ -95,26 +89,25 @@ async def bug(_, msg: Message):
                 caption=f"{bug_report}",
                 reply_markup=InlineKeyboardMarkup(
                     [
+                        [InlineKeyboardButton("➡ View Bug", url=f"{msg.link}")],
                         [
                             InlineKeyboardButton(
-                                "➡ View Bug", url=f"{msg.link}")
+                                "❌ Close", callback_data="close_send_photo"
+                            )
                         ],
-                        [
-                            InlineKeyboardButton(
-                                "❌ Close", callback_data="close_send_photo")
-                        ]
                     ]
-                )
+                ),
             )
         else:
             await msg.reply_text(
                 f"❎ <b>No bug to Report!</b>",
             )
-        
+
 
 @Client.on_callback_query(filters.regex("close_reply"))
 async def close_reply(msg, CallbackQuery):
     await CallbackQuery.message.delete()
+
 
 @Client.on_callback_query(filters.regex("close_send_photo"))
 async def close_send_photo(_, CallbackQuery):
@@ -127,6 +120,6 @@ async def close_send_photo(_, CallbackQuery):
         )
     else:
         await CallbackQuery.message.delete()
-        
+
 
 __mod_name__ = "Bug"
